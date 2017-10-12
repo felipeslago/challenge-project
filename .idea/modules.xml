@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/campaign-api/campaign-api.iml" filepath="$PROJECT_DIR$/.idea/modules/campaign-api/campaign-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/challenge-project.iml" filepath="$PROJECT_DIR$/.idea/modules/challenge-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/group-member-api/group-member-api.iml" filepath="$PROJECT_DIR$/.idea/modules/group-member-api/group-member-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stream/stream.iml" filepath="$PROJECT_DIR$/stream/stream.iml" />
+    </modules>
+  </component>
+</project>

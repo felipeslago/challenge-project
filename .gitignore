@@ -1,0 +1,9 @@
+.gradle
+challenge-campaign.mv.db
+challenge-group-member.mv.db
+
+campaign-api/out
+
+group-member-api/out
+
+stream/build
