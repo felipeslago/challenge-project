@@ -9,4 +9,5 @@ Esse desafio consiste em encontrar a primeira vogal, após uma consoante que pre
 
 ## Executar a aplicação
 Para executar a aplicação é necessário passar como argumento {STREAM} a stream a ser analisada.
+
 `gradle runApp -Pstream={STREAM}`
