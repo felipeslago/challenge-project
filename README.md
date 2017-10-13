@@ -1,5 +1,6 @@
 ## Campaign Api e Group Member Api
 Projeto de implementação das APIs de cadastro de Campanhas e cadastro de Sócio Torcedor
+
 Estratégia utilizada para a criação das APIs:
  1. Spring Boot Tomcat Embedded
  2. H2 Database para persistência dos dados em arquivo.
