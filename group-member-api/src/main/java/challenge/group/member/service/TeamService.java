@@ -39,7 +39,7 @@ public class TeamService extends DefaultResponseErrorHandler {
             logger.error("Error while retrieving teams.", e);
             return Optional.empty();
         } catch (HttpClientErrorException e) {
-            throw new TeamNotFoundException(e.getMessage());
+            throw new TeamNotFoundException(e.getResponseBodyAsString());
         }
     }
 

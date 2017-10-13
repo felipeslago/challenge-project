@@ -104,7 +104,7 @@ public class CampaignController {
     }
 
     @ExceptionHandler(TeamNotFoundException.class)
-    private ResponseEntity<Map<String, String>> teamNotFoundException(TeamNotFoundException e) {
+    private ResponseEntity<Map<String, Object>> teamNotFoundException(TeamNotFoundException e) {
         ResponseError response = new ResponseError();
         response.put("message", "The informed Heart Team Id was not found. Please, use one of listed below.");
         response.put("teams", e.getTeamsEntity().toString());
@@ -112,7 +112,7 @@ public class CampaignController {
     }
 
     @ExceptionHandler(CampaignNotFoundException.class)
-    private ResponseEntity<Map<String, String>> campaignNotFoundException(CampaignNotFoundException e) {
+    private ResponseEntity<Map<String, Object>> campaignNotFoundException(CampaignNotFoundException e) {
         ResponseError response = new ResponseError();
         response.put("message", "The informed Campaign Id was not found.");
         return new ResponseEntity<>(response.getResponse(), HttpStatus.NOT_FOUND);

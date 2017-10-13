@@ -103,7 +103,7 @@ public class MemberControllerTest {
         member.put("dateOfBirth", "2017-11-01");
         member.put("heartTeam", 1L);
 
-        doThrow(new TeamNotFoundException("exception")).when(memberService).registerMember(any(MemberModel.class));
+        doThrow(new TeamNotFoundException("{\"message\":\"exception\"}")).when(memberService).registerMember(any(MemberModel.class));
 
         mockMvc.perform(post("/member")
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -12,6 +12,8 @@ A aplicação irá executar na porta 9002, conforme definido no application.prop
 ## Endpoints
 `GET: /member`
 
+`GET: /member/{MEMBER_ID}`
+
 `POST: /member
  BODY:
     {

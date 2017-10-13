@@ -6,6 +6,8 @@ Estratégia utilizada para a criação das APIs:
  3. Foi utilizado a criação de uma configuração assíncrona para o cadastro e atualização das campanhas, garantindo que as datas das campanhas sejam alteradas sem concorrência e sem manter a requisição esperando.
  4. Foi criado um serviço de WebHooks que pode ser acionado para enviar atualizações de campanhas
 
+* Dentro da pasta artifacts, existe um arquivo com todas as chamadas às APIs, para importação no Postman
+
 ## Stream
 Projeto de implementação do uso de Streams para encontrar vogais
 

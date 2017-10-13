@@ -1,0 +1,169 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Challenge Project",
+		"_postman_id": "a3a7f0fd-8202-c69c-1fb9-73ad847c0446",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Campaign",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All Campaigns",
+					"request": {
+						"url": "http://localhost:9001/campaign",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Campaign",
+					"request": {
+						"url": "http://localhost:9001/campaign/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Campaign",
+					"request": {
+						"url": "http://localhost:9001/campaign",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Campaign 3\",\n\t\"startDate\":\"2017-11-01\",\n\t\"endDate\":\"2017-11-03\",\n\t\"heartTeamId\":1\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Campaign",
+					"request": {
+						"url": "http://localhost:9001/campaign",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":1,\n\t\"name\":\"Campaign 2\",\n\t\"startDate\":\"2017-10-01\",\n\t\"endDate\":\"2017-10-10\",\n\t\"heartTeamId\":1\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Campaign",
+					"request": {
+						"url": "http://localhost:9001/campaign/1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Teams",
+					"request": {
+						"url": "http://localhost:9001/team",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Team",
+					"request": {
+						"url": "http://localhost:9001/team/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Member",
+			"description": "",
+			"item": [
+				{
+					"name": "Get All Members",
+					"request": {
+						"url": "http://localhost:9002/member",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Member",
+					"request": {
+						"url": "http://localhost:9002/member/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Member",
+					"request": {
+						"url": "http://localhost:9002/member",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Member 2\",\n\t\"email\":\"member2@test.com\",\n\t\"dateOfBirth\":\"1988-12-09\",\n\t\"heartTeam\":1\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,5 +1,7 @@
 package challenge.group.member.model;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,12 +13,16 @@ public class ResponseError implements Serializable {
 
     private static final long serialVersionUID = 8011622748112619204L;
 
-    private Map<String, String> response = new LinkedHashMap<>();
+    private Map<String, Object> response = new LinkedHashMap<>();
 
     public ResponseError() {
     }
 
-    public Map<String, String> getResponse() {
+    public ResponseError(JSONObject response) {
+        this.response = response.toMap();
+    }
+
+    public Map<String, Object> getResponse() {
         return response;
     }
 

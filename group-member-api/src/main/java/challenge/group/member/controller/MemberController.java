@@ -5,6 +5,8 @@ import challenge.group.member.exception.TeamNotFoundException;
 import challenge.group.member.model.MemberModel;
 import challenge.group.member.model.ResponseError;
 import challenge.group.member.service.MemberService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,12 +68,14 @@ public class MemberController {
     }
 
     @ExceptionHandler(TeamNotFoundException.class)
-    private ResponseEntity<String> teamNotFoundException(TeamNotFoundException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    private ResponseEntity<Map<String, Object>> teamNotFoundException(TeamNotFoundException e) {
+        JSONObject jsonObject = new JSONObject(e.getMessage());
+        ResponseError responseError = new ResponseError(jsonObject);
+        return new ResponseEntity<>(responseError.getResponse(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MemberNotFoundException.class)
-    private ResponseEntity<Map<String, String>> memberNotFoundException(MemberNotFoundException e) {
+    private ResponseEntity<Map<String, Object>> memberNotFoundException(MemberNotFoundException e) {
         ResponseError response = new ResponseError();
         response.put("message", "The informed Member Id was not found.");
         return new ResponseEntity<>(response.getResponse(), HttpStatus.NOT_FOUND);
