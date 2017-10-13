@@ -17,10 +17,6 @@ public class TeamEntity {
     protected TeamEntity() {
     }
 
-    public TeamEntity(String name) {
-        this.name = name;
-    }
-
     public Long getId() {
         return id;
     }

@@ -13,6 +13,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
+/**
+ * Service class for managing teams.
+ */
 @Service
 public class TeamService extends DefaultResponseErrorHandler {
 
@@ -21,9 +24,15 @@ public class TeamService extends DefaultResponseErrorHandler {
     @Value("${team.url}")
     private String TEAM_URL;
 
+    private RestTemplate restTemplate = new RestTemplate();
+
+    /**
+     * Retrieves a team by its id.
+     *
+     * @return Optional<TeamModel>
+     */
     public Optional<TeamModel> findTeamById(Long id) {
         try {
-            RestTemplate restTemplate = new RestTemplate();
             TeamModel teamModel = restTemplate.getForObject(TEAM_URL + "/" + id, TeamModel.class);
             return Optional.of(teamModel);
         } catch (ResourceAccessException e) {

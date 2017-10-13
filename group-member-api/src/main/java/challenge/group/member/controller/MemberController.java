@@ -1,8 +1,10 @@
 package challenge.group.member.controller;
 
+import challenge.group.member.exception.MemberNotFoundException;
+import challenge.group.member.exception.TeamNotFoundException;
 import challenge.group.member.model.MemberModel;
+import challenge.group.member.model.ResponseError;
 import challenge.group.member.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 
 /**
  * REST controller for managing members.
@@ -20,35 +23,58 @@ import java.util.List;
 @RequestMapping("/member")
 public class MemberController {
 
-    @Autowired
     private MemberService memberService;
 
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
+    /**
+     * GET  /member  : Retrieves all member.
+     *
+     * @return the ResponseEntity with status 200 (OK) and with body the list of members
+     */
     @GetMapping
     public ResponseEntity<List<MemberModel>> retrieveMember() {
         List<MemberModel> members = memberService.retrieveMembers();
         return new ResponseEntity<>(members, HttpStatus.OK);
     }
 
+    /**
+     * GET  /member  : Retrieves a member by its id.
+     *
+     * @param id the member id
+     * @return the ResponseEntity with status 200 (OK) and with body the requested member
+     */
     @GetMapping("/{id}")
     public ResponseEntity<MemberModel> retrieveMember(@NotNull @PathVariable(name = "id") final Long id) {
         MemberModel member = memberService.retrieveMember(id);
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
+    /**
+     * POST  /member  : Register a new member.
+     * <p>
+     * Creates a new member if the heart team is valid
+     *
+     * @return the ResponseEntity with status 200 (OK) and with null body
+     */
     @PostMapping
     public ResponseEntity<Void> registerMember(@Valid @RequestBody final MemberModel member) {
         memberService.registerMember(member);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<Void> updateMember() {
-        return new ResponseEntity<>(HttpStatus.OK);
+    @ExceptionHandler(TeamNotFoundException.class)
+    private ResponseEntity<String> teamNotFoundException(TeamNotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteMember() {
-        return new ResponseEntity<>(HttpStatus.OK);
+    @ExceptionHandler(MemberNotFoundException.class)
+    private ResponseEntity<Map<String, String>> memberNotFoundException(MemberNotFoundException e) {
+        ResponseError response = new ResponseError();
+        response.put("message", "The informed Member Id was not found.");
+        return new ResponseEntity<>(response.getResponse(), HttpStatus.NOT_FOUND);
     }
 
 }

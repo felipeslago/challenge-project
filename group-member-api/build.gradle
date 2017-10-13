@@ -30,6 +30,7 @@ dependencies {
     compile("com.h2database:h2")
     compile("com.google.guava:guava:23.1-jre")
     testCompile("junit:junit")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
 clean {

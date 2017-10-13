@@ -15,8 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -29,8 +30,10 @@ public class CampaignService {
     private final Logger logger = LoggerFactory.getLogger(CampaignService.class);
     private final TeamRepository teamRepository;
     private final CampaignRepository campaignRepository;
+    private final WebHookService webHookService;
 
-    public CampaignService(TeamRepository teamRepository, CampaignRepository campaignRepository) {
+    public CampaignService(WebHookService webHookService, TeamRepository teamRepository, CampaignRepository campaignRepository) {
+        this.webHookService = webHookService;
         this.teamRepository = teamRepository;
         this.campaignRepository = campaignRepository;
     }
@@ -84,26 +87,13 @@ public class CampaignService {
      *
      * @param campaign the campaign to register
      */
-    @Async("campaignExecutor")
     public void registerCampaign(CampaignModel campaign) {
         logger.debug("Registering new campaign: {}", campaign.toString());
 
         Optional<TeamEntity> teamEntity = teamRepository.findOneById(campaign.getHeartTeamId());
 
         if(teamEntity.isPresent()) {
-            List<CampaignEntity> campaignEntities =
-                    campaignRepository.findAllByStartDateAndEndDateBetween(campaign.getStartDate(), campaign.getEndDate());
-
-            campaignEntities.forEach(campaignEntity -> {
-                do {
-                    LocalDate localDate = DateUtils.dateToLocalDate(campaignEntity.getEndDate()).plusDays(1L);
-                    campaignEntity.setEndDate(DateUtils.localDateToDate(localDate));
-                } while (campaignRepository.existsByEndDateEqualsAndIdNot(campaignEntity.getEndDate(), campaignEntity.getId()) ||
-                        campaign.getEndDate().compareTo(campaignEntity.getEndDate()) == 0);
-
-                campaignRepository.save(campaignEntity);
-            });
-
+            updateCampaignsEndDate(campaign.getStartDate(), campaign.getEndDate());
             campaignRepository.save(new CampaignEntity(campaign.getName(), campaign.getStartDate(),
                     campaign.getEndDate(), teamEntity.get()));
         } else {
@@ -123,11 +113,13 @@ public class CampaignService {
         if(campaignEntity.isPresent()) {
             Optional<TeamEntity> teamEntity = teamRepository.findOneById(campaign.getHeartTeamId());
             if(teamEntity.isPresent()) {
+                updateCampaignsEndDate(campaign.getStartDate(), campaign.getEndDate());
                 campaignEntity.get().setName(campaign.getName());
                 campaignEntity.get().setStartDate(campaign.getStartDate());
                 campaignEntity.get().setEndDate(campaign.getEndDate());
                 campaignEntity.get().setTeamEntity(teamEntity.get());
                 campaignRepository.save(campaignEntity.get());
+                webHookService.sendCampaignUpdates(campaign);
             } else {
                 throw new TeamNotFoundException(teamRepository.findAll());
             }
@@ -150,6 +142,28 @@ public class CampaignService {
         } else {
             throw new CampaignNotFoundException();
         }
+    }
+
+    /**
+     * Update campaigns end date ensuring that will be no campaign with the same end date.
+     *
+     * @param startDate the campaign start date
+     * @param endDate the campaign end date
+     */
+    @Async("campaignExecutor")
+    private void updateCampaignsEndDate(Date startDate, Date endDate) {
+        List<CampaignEntity> campaignEntities =
+                campaignRepository.findAllByStartDateAndEndDateBetween(startDate, endDate);
+
+        campaignEntities.forEach(campaignEntity -> {
+            do {
+                LocalDate localDate = DateUtils.dateToLocalDate(campaignEntity.getEndDate()).plusDays(1L);
+                campaignEntity.setEndDate(DateUtils.localDateToDate(localDate));
+            } while (campaignRepository.existsByEndDateEqualsAndIdNot(campaignEntity.getEndDate(), campaignEntity.getId()) ||
+                    endDate.compareTo(campaignEntity.getEndDate()) == 0);
+
+            campaignRepository.save(campaignEntity);
+        });
     }
 
 }

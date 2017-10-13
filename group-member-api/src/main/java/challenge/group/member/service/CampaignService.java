@@ -14,20 +14,26 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class for managing campaigns.
+ */
 @Service
 public class CampaignService {
 
     private static final Logger logger = LoggerFactory.getLogger(CampaignService.class);
 
-    @Value("${campaign.url}")
-    private String CAMPAIGN_URL;
-
     @Value("${campaign.team.url}")
     private String CAMPAIGN_TEAM_URL;
 
+    private RestTemplate restTemplate = new RestTemplate();
+
+    /**
+     * Retrieves all campaigns by team id.
+     *
+     * @return List<CampaignModel>
+     */
     public Optional<List<CampaignModel>> retrieveCampaignsByTeamId(Long id) {
         try {
-            RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<CampaignModel[]> campaigns =
                     restTemplate.getForEntity(CAMPAIGN_TEAM_URL + "/" + id, CampaignModel[].class);
             return Optional.of(Arrays.asList(campaigns.getBody()));

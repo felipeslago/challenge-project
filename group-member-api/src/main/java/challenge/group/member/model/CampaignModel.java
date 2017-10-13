@@ -31,15 +31,6 @@ public class CampaignModel implements Serializable {
     private CampaignModel() {
     }
 
-    public CampaignModel(Long id, String name, Date startDate, Date endDate, Long heartTeamId, String heartTeam) {
-        this.id = id;
-        this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.heartTeamId = heartTeamId;
-        this.heartTeam = heartTeam;
-    }
-
     public Long getId() {
         return id;
     }

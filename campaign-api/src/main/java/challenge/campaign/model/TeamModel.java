@@ -39,4 +39,10 @@ public class TeamModel implements Serializable {
                 id, name);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        TeamModel teamModel = (TeamModel) obj;
+        return this.id == teamModel.getId() &&
+                this.name == teamModel.getName();
+    }
 }

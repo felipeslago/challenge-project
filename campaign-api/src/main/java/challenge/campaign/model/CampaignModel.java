@@ -32,15 +32,6 @@ public class CampaignModel implements Serializable {
     private CampaignModel() {
     }
 
-    public CampaignModel(Long id, String name, Date startDate, Date endDate, Long heartTeamId, String heartTeam) {
-        this.id = id;
-        this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.heartTeamId = heartTeamId;
-        this.heartTeam = heartTeam;
-    }
-
     public CampaignModel(CampaignEntity campaignEntity) {
         this.id = campaignEntity.getId();
         this.name = campaignEntity.getName();
@@ -79,5 +70,16 @@ public class CampaignModel implements Serializable {
         return String.format(
                 "Campaign[id=%d, name='%s', startDate='%s', endDate='%s', heartTeamId=%d, heartTeam='%s']",
                 id, name, startDate, endDate, heartTeamId, heartTeam);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        CampaignModel campaignModel = (CampaignModel) obj;
+        return this.id == ((CampaignModel) obj).getId() &&
+                this.name == ((CampaignModel) obj).getName() &&
+                this.startDate == ((CampaignModel) obj).getStartDate() &&
+                this.endDate == ((CampaignModel) obj).endDate &&
+                this.heartTeamId == ((CampaignModel) obj).getHeartTeamId() &&
+                this.heartTeam == ((CampaignModel) obj).getHeartTeam();
     }
 }

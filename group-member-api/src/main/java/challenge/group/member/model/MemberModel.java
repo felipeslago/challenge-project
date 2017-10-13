@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * A DTO representing a member.
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MemberModel implements Serializable {
 
@@ -30,14 +33,6 @@ public class MemberModel implements Serializable {
         this.heartTeam = memberEntity.getHeartTeam();
     }
 
-    public MemberModel(Long id, String name, String email, Date dateOfBirth, Long heartTeam) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.dateOfBirth = dateOfBirth;
-        this.heartTeam = heartTeam;
-    }
-
     public Long getId() {
         return id;
     }
@@ -58,4 +53,13 @@ public class MemberModel implements Serializable {
         return heartTeam;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        MemberModel memberModel = (MemberModel) obj;
+        return this.id == memberModel.getId() &&
+                this.name == memberModel.getName() &&
+                this.email == memberModel.getEmail() &&
+                this.dateOfBirth == memberModel.getDateOfBirth() &&
+                this.heartTeam == memberModel.getHeartTeam();
+    }
 }

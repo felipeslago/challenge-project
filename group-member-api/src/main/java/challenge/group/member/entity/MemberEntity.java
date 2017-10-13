@@ -1,6 +1,5 @@
 package challenge.group.member.entity;
 
-import challenge.group.member.model.CampaignModel;
 import challenge.group.member.model.TeamModel;
 
 import javax.persistence.*;
@@ -8,6 +7,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * A member.
+ */
 @Entity
 @Table(name = "MEMBER")
 public class MemberEntity {

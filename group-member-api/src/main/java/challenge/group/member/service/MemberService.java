@@ -6,7 +6,6 @@ import challenge.group.member.exception.MemberNotFoundException;
 import challenge.group.member.model.CampaignModel;
 import challenge.group.member.model.MemberModel;
 import challenge.group.member.model.TeamModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,19 +13,28 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing members.
+ */
 @Service
 @Transactional
 public class MemberService {
 
-    @Autowired
     private MemberRepository memberRepository;
-
-    @Autowired
     private TeamService teamService;
-
-    @Autowired
     private CampaignService campaignService;
 
+    public MemberService(MemberRepository memberRepository, TeamService teamService, CampaignService campaignService) {
+        this.memberRepository = memberRepository;
+        this.teamService = teamService;
+        this.campaignService = campaignService;
+    }
+
+    /**
+     * Retrieves all members.
+     *
+     * @return List<MemberModel>
+     */
     public List<MemberModel> retrieveMembers() {
         return memberRepository
                 .findAll()
@@ -35,6 +43,12 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves an existing member by its id.
+     *
+     * @param id the member id
+     * @return MemberModel
+     */
     public MemberModel retrieveMember(Long id) {
         Optional<MemberEntity> memberEntity = memberRepository.findOneById(id);
         if(memberEntity.isPresent()) {
@@ -43,7 +57,11 @@ public class MemberService {
         throw new MemberNotFoundException();
     }
 
-
+    /**
+     * Register a new member if the heart team is valid.
+     *
+     * @param member the member to register
+     */
     public void registerMember(MemberModel member) {
         Optional<TeamModel> teamModel = teamService.findTeamById(member.getHeartTeam());
 

@@ -4,7 +4,6 @@ import challenge.campaign.exception.TeamNotFoundException;
 import challenge.campaign.model.ResponseError;
 import challenge.campaign.model.TeamModel;
 import challenge.campaign.service.TeamService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +21,11 @@ import java.util.Map;
 @RequestMapping("/team")
 public class TeamController {
 
-    @Autowired
-    private TeamService teamService;
+    private final TeamService teamService;
+
+    public TeamController(TeamService teamService) {
+        this.teamService = teamService;
+    }
 
     /**
      * GET  /team  : Retrieves all teams.
@@ -43,7 +45,7 @@ public class TeamController {
      * @return the ResponseEntity with status 200 (OK) and with body the requested team
      */
     @GetMapping("/{id}")
-    public ResponseEntity<TeamModel> retrieveTeams(@NotNull @PathVariable(name = "id") final Long id) {
+    public ResponseEntity<TeamModel> retrieveTeam(@NotNull @PathVariable(name = "id") final Long id) {
         TeamModel teamModel = teamService.retrieveTeam(id);
         return new ResponseEntity<>(teamModel, HttpStatus.OK);
     }

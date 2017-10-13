@@ -6,6 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Spring Data CRUD repository for the Member entity.
+ */
 public interface MemberRepository extends CrudRepository<MemberEntity, Long> {
 
     Optional<MemberEntity> findOneById(Long aLong);

@@ -4,7 +4,6 @@ import challenge.campaign.dao.TeamRepository;
 import challenge.campaign.entity.TeamEntity;
 import challenge.campaign.exception.TeamNotFoundException;
 import challenge.campaign.model.TeamModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +18,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class TeamService {
 
-    @Autowired
-    private TeamRepository teamRepository;
+    private final TeamRepository teamRepository;
+
+    public TeamService(TeamRepository teamRepository) {
+        this.teamRepository = teamRepository;
+    }
 
     /**
      * Retrieves all teams.

@@ -3,7 +3,10 @@ challenge-campaign.mv.db
 challenge-group-member.mv.db
 
 campaign-api/out
+campaign-api/build
 
 group-member-api/out
+group-member-api/build
 
+stream/out
 stream/build
